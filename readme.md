@@ -3,7 +3,7 @@ I created this script to easily to finish the installation and recovery of my HA
 You can use the whole or parts of this script for your own benefit because it is mostly generic in its setup.
 But a good understanding of ubuntu, qnap, docker hassio and onedrive is needed. I cannot be held responsible for any result.
 
-And result must be the following: 
+My goal and setup is: 
 - QNAP TS251 running Ubuntu 18.04 native
 - Docker for my custom dockercontainers with webservers and traefik als a reverse proxy, secured and seperated
 - Docker-container configs synced with onedrive (selective folders) for backup and easy adjustments of config/website design
