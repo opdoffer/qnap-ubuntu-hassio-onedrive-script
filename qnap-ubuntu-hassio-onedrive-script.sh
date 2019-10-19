@@ -147,6 +147,7 @@ bond_nics(){
 			echo -e "${RED}Do you want your NICS loadbalanced? (y/n) only tested on QNAPTS251. ${NC}\n"
 			read answer2
 			if [ "$answer2" != "${answer2#[Yy]}" ] ;then
+    			apt -y install net-tools
     			echo "You answered yes, assuming you have a QNAP TS251"
     				    modprobe bonding
 	    				echo "bonding" >> /etc/modulesdub
