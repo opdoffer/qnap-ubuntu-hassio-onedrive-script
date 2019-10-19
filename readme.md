@@ -56,7 +56,7 @@ So the script has couple of options:
 3. Install of docker, HASIO and recovery of HASSIO config from Onedrive and custom containers"
 4. Loadbalance nics (bond0 interface will be created, testen on QNAP TS251)"
 
-Prerequisites for option 3 is explained in more detail step 2.
+Prerequisites for option 3 is explained in more detail step 2. Note that running this script using ssh is not working yet. Because you need to click a link to open a browser to Onedrive for authentication.
 
 Enter the following command to download it:
 ```
