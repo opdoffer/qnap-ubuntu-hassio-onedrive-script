@@ -19,16 +19,16 @@ All this is a result of solutions and script out there. So shout out to:
 - [HASSIO on Ubuntu](https://gist.github.com/frenck/32b4f74919ca6b95b30c66f85976ec58) Github: frenck/hassio_ubuntu_install_commands.sh
 
 **WARNING!!!**
-**This script is tested on my own setup, but using this is at your own risk. DATA will be lost on QNAP. Please adjust it to your own needs!!**
+**This script is tested on my own setup, but use this is at your own risk. DATA will be lost on QNAP. Please adjust it to your own needs!!**
 **In case you want to be absloutely sure about the outcome, use manual installation steps following the links mentioned before.**
 
-## Step1. Prepare the QNAP (you can skip this if you have Ubuntu up and running already):
+## Step1. Prepare the QNAP (you can skip this if you have Ubuntu up and running already or don't own a QNAP):
 - Create a Ubuntu live USB (This procedure is tested with ubuntu 18.04);
 - Connect a keyboard and HDMI screen to the QNAP TS251+;
 - Boot the QNAP and press DEL repeatedly when QNAP splash screen starts;
 - Change the boot order to local harddrive, and shutdown QNAP
 - Insert Ubuntu live USB and press F7 during QNAP splash screen repeatedly until temporary bootmenu appears
-- Choos to boot from Live usb
+- Choose to boot from Live usb
 - Follow instructions to install ubuntu on local harddisk of the QNAP WARNING!!!: all data will be lost!!!!
 - After reboot QNAP will start Ubuntu. Proceed to next step.
 
@@ -50,24 +50,22 @@ In case you want different folder structures, please make adjustments in the var
 
 ## Step 3. Installation of Docker, HASSIO and Onedrive
 The following script can install docker followed by HASSIO and/or including install Onedrive for linux. I use Onedrive to backup my config of the dockercontainers and recreate the dockers with docker-compose automatically.
-So the script has 2 options:
-1. Clean install of docker followed by HASSIO
-2. Install docker followed by HASSIO and Onedrive recovery of container-configs including crontab to backup container-configs. For recovery situations.
+So the script has couple of options:
+1. Clean install of docker and HASSIO"
+2. Install of docker, HASIO and recovery of HASSIO config"
+3. Install of docker, HASIO and recovery of HASSIO config from Onedrive and custom containers"
+4. Loadbalance nics (bond0 interface will be created, testen on QNAP TS251)"
 
-Option 2 explanation in more detail see previous step.
+Prerequisites for option 3 is explained in more detail step 2.
 
 Enter the following command to download it:
 ```
-git clone https://github.com/opdoffer/ubuntu-hassio-onedrive-script.git
+git clone https://github.com/opdoffer/qnap-ubuntu-hassio-onedrive-script.git
 ```
 Start the script:
 ```
-sudo ./ubuntu-hassio-ondrive-script/ubuntu-hassio-onedrive-script.sh
+sudo ./qnap-ubuntu-hassio-onedrive-script/qnap-ubuntu-hassio-onedrive-script.sh
 ```
-The script hass also two other features you might like/need:
- 3. Loadbalance two nics in the QNAP TS 251 (don't use this if you don't have 2 nics or this QNAP)
- 4. Firmware upgrade of the conbee 2
-
 
 ## TODO list
 - create docker-compose example for traefik and 2 webservers

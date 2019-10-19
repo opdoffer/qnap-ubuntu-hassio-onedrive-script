@@ -190,7 +190,7 @@ show_menus() {
 	echo "~~~~~~~~~~~~~~~~~~~~~"
 	echo " 1. Clean install of docker and HASSIO"
 	echo " 2. Install of docker, HASIO and recovery of HASSIO config"
-	echo " 3. Install of docker, HASIO and recovery of HASSIO config and custom containers"
+	echo " 3. Install of docker, HASIO and recovery of HASSIO config from onedrive and custom containers"
 	echo " 4. Loadbalance nics (bond0 interface will be created, testen on QNAP TS251)"
 	echo " 5. Quit"
 }
