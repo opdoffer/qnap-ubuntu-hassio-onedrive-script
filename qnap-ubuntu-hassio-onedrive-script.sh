@@ -62,7 +62,7 @@ inst_docker_hassio_localbackupconfig(){
 			else
    			 echo "You answered No, please enter full path of the backupfolder. Example: /home/yourname/hassiobackupfolder"
    			 read answer0a
-   			 cp -rv $answer0a/* /usr/share/hassio/homeassistant ;then 
+   			 cp -rv $answer0a/* /usr/share/hassio/homeassistant ; 
 			fi
 			mkdir ~/hassiobackupfolder
 			mkdir ~/hassiobackupfolder/$DATE
