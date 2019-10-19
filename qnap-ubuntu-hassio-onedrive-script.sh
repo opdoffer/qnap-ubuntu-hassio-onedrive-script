@@ -85,7 +85,7 @@ inst_docker_hassio_onedrive_containers(){
             apt-get -y install pkg-config
             apt-get -y install pkgconf
             echo "Trying to install HASSIO..."
-            echo "${RED}Type EXIT en ENTER. I need to exit current user and enter root...sorry for that${NC}"
+            echo -e "${RED}Type EXIT en ENTER. I need to exit current user and enter root...sorry for that${NC}"
             sudo -i
 			add-apt-repository universe
 			apt-get -y update
