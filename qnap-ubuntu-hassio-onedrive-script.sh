@@ -16,7 +16,8 @@ gateway4="192.168.5.1" #Enter the ip adress of your gateway to config you bondin
 # ----------------------------------
 RED='\033[0;31m \e[1m'
 NC='\033[0m' # No Color
-DATE=`date +%Y-%m-%d`
+DATE=`date +%d-%m-%y %H-%M`
+
 
 
 # ----------------------------------------------
@@ -138,7 +139,7 @@ inst_docker_hassio_onedrive_containers(){
 			mkdir ~/Onedrive/$onedrivefolderbackup/hassiobackupfolder
 			mkdir ~/Onedrive/$onedrivefolderbackup/hassiobackupfolder/$DATE
 			echo "Creating an axtra backup, just for sure."
-			cp -vr /usr/share/hassio/homeassistant/* ~~/Onedrive/$onedrivefolderbackup/hassiobackupfolder/$DATE
+			cp -vr /usr/share/hassio/homeassistant/* ~/Onedrive/$onedrivefolderbackup/hassiobackupfolder/$DATE
 			
 			echo "Please reboot, it is necessary(!)"
 }	
