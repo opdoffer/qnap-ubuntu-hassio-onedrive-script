@@ -5,8 +5,8 @@
 ## ----------------------------------
 # Define custom variables
 # ----------------------------------
-onedrivefoldercurrent="/container-configs-current" #Enter your most current docker container config folder, which you copied to Onedrive and want to recover from
-onedrivefolderbackup="/container-configs-backup" #Enter the path in Onedrive where backups of your contianer-configs will be synced
+onedrivefoldercurrent="container-configs-current" #Enter your most current docker container config folder, which you copied to Onedrive and want to recover from
+onedrivefolderbackup="container-configs-backup" #Enter the path in Onedrive where backups of your contianer-configs will be synced
 hassiobackupfolder="~/hassiobackupfolder"
 ip_addresses="[192.168.5.3/24]" #Enter the ip adress and subnet to config you bonding nics in Ubuntu on the QNAP. Entering wrong will end up in an inaccessible server.
 gateway4="192.168.5.1" #Enter the ip adress of your gateway to config you bonding nics in Ubuntu on the QNAP. 
