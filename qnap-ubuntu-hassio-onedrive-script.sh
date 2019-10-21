@@ -136,6 +136,7 @@ inst_docker_hassio_onedrive_containers(){
 			systemctl --user enable onedrive
 			systemctl --user start onedrive
 			(crontab -u remco -l; echo "@reboot /bin/sh onedrive --monitor" ) | crontab -u $USER -
+			mkdir ~/Onedrive/$onedrivefolderbackup
 			mkdir ~/Onedrive/$onedrivefolderbackup/hassiobackupfolder
 			mkdir ~/Onedrive/$onedrivefolderbackup/hassiobackupfolder/$DATE
 			echo "Creating an axtra backup, just for sure."
@@ -184,6 +185,54 @@ bond_nics(){
 			fi
 }
 
+# -------------------------------------------------------------------------------------
+# Install mods vfor zwave and zigbee on QNAP TS251
+# -------------------------------------------------------------------------------------			
+
+install_mods_zwave_zigbee(){
+			printf "\033c"
+			echo -e "${RED}Do you want to install mods for Aeotec Zwave USBstick and Conbee 2 USBstick? (y/n) only tested on QNAPTS251. ${NC}\n"
+			read answer3
+			if [ "$answer3" != "${answer3#[Yy]}" ] ;then
+				insmod /usr/local/modules/cp210x.ko
+				insmod /usr/local/modules/usbserial.ko
+				insmod /usr/local/modules/cdc-acm.ko
+				insmod /usr/local/modules/ftdi_sio.ko
+				lsusb
+				ls /dev/tty*
+				else
+			    	echo "You answered no."
+				fi
+			;;
+}
+
+# -------------------------------------------------------------------------------------
+# Upgrade conbee 2 usbstick
+# -------------------------------------------------------------------------------------			
+
+upgrade_conbee2(){
+			printf "\033c"
+			echo -e "${RED}Do you want to upgrade Conbee 2 USBstick? (y/n) only tested on QNAPTS251. ${NC}\n"
+			read answer3
+			if [ "$answer3" != "${answer3#[Yy]}" ] ;then
+		    	systemctl stop deconz
+		    	wget https://www.dresden-elektronik.de/rpi/deconz-firmware/deCONZ_ConBeeII_0x26490700.bin.GCF
+		    	GCFFlasher_internal -d /dev/ttyACM0 -f deCONZ_ConBeeII_0x26490700.bin.GCF
+		    	systemctl start deconz
+		    else
+			    echo "You answered no."
+			fi
+		    ;;
+}
+
+
+# ----------------------------------------------
+# Update containers
+# ----------------------------------------------
+
+
+
+
 
 # ----------------------------------------------
 # Function to display menus
@@ -196,9 +245,12 @@ show_menus() {
 	echo "~~~~~~~~~~~~~~~~~~~~~"
 	echo " 1. Clean install of docker and HASSIO"
 	echo " 2. Install of docker, HASIO and recovery of HASSIO config"
-	echo " 3. Install of docker, HASIO and recovery of HASSIO config from onedrive and custom containers"
+	echo " 3. Install of docker, HASIO and recovery of HASSIO config from onedrive"
 	echo " 4. Loadbalance nics (bond0 interface will be created, testen on QNAP TS251)"
-	echo " 5. Quit"
+	echo " 5. Install mods for Zwave and Zigbee to support Aeotec an Conbee2 USB sticks"
+	echo " 6. Upgrade Conbee 2 USB  stick"
+	echo " 7. Update containers (working on)"
+	echo " 8. Quit"
 }
 # read input from the keyboard and take a action
 read_options(){
@@ -209,7 +261,10 @@ read_options(){
 		2) inst_docker_hassio_localbackupconfig ;;
 		3) inst_docker_hassio_onedrive_containers ;;
 		4) bond_nics ;;
-		5) exit 0;;
+		5) install_mods_zwave_zigbee ;;
+		6) upgrade_conbee2 ;;
+		7) update_containers ;;
+		8) exit 0;;
 		*) echo -e "${RED}Error...${NC}" && sleep 2
 	esac
 }
