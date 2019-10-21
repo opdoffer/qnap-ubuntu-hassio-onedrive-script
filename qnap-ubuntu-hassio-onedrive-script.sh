@@ -88,9 +88,9 @@ inst_docker_hassio_onedrive_containers(){
             echo "Trying to install HASSIO, but first let's check if it is already installed..."
             if [[ -z $(ps -ef |grep ${hassio-supervisor.service}) ]]
 				then 
-   					print "${RED}You need to stop here. HASSIO is already installed. Press CTRL-C!\n"
+   					echo "${RED}You need to stop here. HASSIO is already installed. Press CTRL-C!\n"
 				else
-   					print "HASSIO not installed continuing...\n"
+   					echo "HASSIO not installed continuing...\n"
 			fi
             echo -e "${RED}Type EXIT en ENTER. I need to exit current user and enter root...sorry for that${NC}"
             sudo -i
