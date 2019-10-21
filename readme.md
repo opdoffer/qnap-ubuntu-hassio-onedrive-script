@@ -19,6 +19,7 @@ All this is a result of solutions and script out there. So shout out to:
 - [HASSIO on Ubuntu](https://gist.github.com/frenck/32b4f74919ca6b95b30c66f85976ec58) Github: frenck/hassio_ubuntu_install_commands.sh
 
 **WARNING!!!**
+**This script is under construction. DO NOT USE THIS YET**
 **This script is tested on my own setup, but use this is at your own risk. DATA will be lost on QNAP. Please adjust it to your own needs!!**
 **In case you want to be absloutely sure about the outcome, use manual installation steps following the links mentioned before.**
 
