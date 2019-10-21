@@ -222,7 +222,6 @@ upgrade_conbee2(){
 		    else
 			    echo "You answered no."
 			fi
-		    ;;
 }
 
 
