@@ -85,7 +85,13 @@ inst_docker_hassio_onedrive_containers(){
             apt -y install docker-compose
             apt-get -y install pkg-config
             apt-get -y install pkgconf
-            echo "Trying to install HASSIO..."
+            echo "Trying to install HASSIO, but first let's check if it is already installed..."
+            if [[ -z $(ps -ef |grep ${hassio-supervisor.service}) ]]
+				then 
+   					print "${RED}You need to stop here. HASSIO is already installed. Press CTRL-C!\n"
+				else
+   					print "HASSIO not installed continuing...\n"
+			fi
             echo -e "${RED}Type EXIT en ENTER. I need to exit current user and enter root...sorry for that${NC}"
             sudo -i
 			add-apt-repository universe
