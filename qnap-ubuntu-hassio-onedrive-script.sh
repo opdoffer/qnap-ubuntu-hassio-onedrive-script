@@ -57,6 +57,7 @@ inst_docker_hassio_localbackupconfig(){
 			echo "create an axtra backup, just for sure."
 			cp -vr /usr/share/hassio/homeassistant/* ~/hassiobackupfolder/$DATE
 			echo "Please reboot, it is necessary(!)"
+			read -p "Press [ENTER] to continue or CTRL-C to abort..."
 }
 			
 # -------------------------------------------------------------------------------------
@@ -71,6 +72,7 @@ inst_docker_hassio_onedrive_containers(){
        		install_OneDrive
        		recover_HASSIO_from_Drive
        		echo "Please reboot, it is necessary(!)"
+       		read -p "Press [ENTER] to continue or CTRL-C to abort..."
 }	
 
 # -------------------------------------------------------------------------------------
@@ -122,6 +124,7 @@ install_OneDrive(){
 			systemctl --user enable onedrive
 			systemctl --user start onedrive
 			(crontab -u remco -l; echo "@reboot /bin/sh onedrive --monitor" ) | crontab -u $USER -
+			read -p "Press [ENTER] to continue or CTRL-C to abort..."
 }
 
 # -------------------------------------------------------------------------------------
@@ -141,6 +144,7 @@ recover_HASSIO_from_Drive(){
 			mkdir ~/OneDrive/$onedrivefolderbackup/hassiobackupfolder/$DATE
 			echo "Creating an extra backup, just for sure."
 			cp -vr /usr/share/hassio/homeassistant/* ~/OneDrive/$onedrivefolderbackup/hassiobackupfolder/$DATE
+			read -p "Press [ENTER] to continue or CTRL-C to abort..."
 }
 
 # -------------------------------------------------------------------------------------
@@ -155,6 +159,7 @@ install_docker(){
             else
     			echo -e "${RED}Docker seems to be installed already. Skipping docker installation.${NC}\n"
     		fi
+    		read -p "Press [ENTER] to continue or CTRL-C to abort..."
 }
 
 
@@ -180,6 +185,7 @@ install_hassio(){
     		else
     			echo -e "${RED}HASSIO seems to be installed already. Skipping HASSIO installation.${NC}\n"
     		fi
+    		read -p "Press [ENTER] to continue or CTRL-C to abort..."
 }
 		
 # -------------------------------------------------------------------------------------
@@ -220,6 +226,7 @@ bond_nics(){
 			else
 			    echo "You answered no."
 			fi
+			read -p "Press [ENTER] to continue or CTRL-C to abort..."
 }
 
 # -------------------------------------------------------------------------------------
@@ -240,6 +247,7 @@ install_mods_zwave_zigbee(){
 				else
 			    	echo "You answered no."
 				fi
+				read -p "Press [ENTER] to continue or CTRL-C to abort..."
 }
 
 # -------------------------------------------------------------------------------------
@@ -258,6 +266,7 @@ upgrade_conbee2(){
 		    else
 			    echo "You answered no."
 			fi
+			read -p "Press [ENTER] to continue or CTRL-C to abort..."
 }
 
 
