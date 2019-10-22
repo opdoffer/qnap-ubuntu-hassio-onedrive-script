@@ -82,7 +82,7 @@ inst_docker_hassio_onedrive_containers(){
 			read -p "Press [ENTER] to continue or CTRL-C to abort..."
             echo "Trying to install HASSIO, but first let's check if it is already installed..."
             
-            if [[ `ps -acx|grep hassio|wc -l` -lt 1 ]]; then
+            if [[ `systemctl|grep hassio|wc -l` -lt 1 ]]; then
 				echo -e "${RED}Looks like HASSIO is not installed. Continuing...${NC}\n"
     		else
     			echo -e "${RED}HASSIO seems to be installed already. Exiting script.?${NC}\n"
