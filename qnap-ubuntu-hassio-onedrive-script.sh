@@ -86,7 +86,6 @@ inst_docker_hassio_onedrive_containers(){
 				echo -e "${RED}Looks like HASSIO is not installed. Continuing...${NC}\n"
     		else
     			echo -e "${RED}HASSIO seems to be installed already. Exiting script.?${NC}\n"
-    			ps -acx|grep hassio|wc -l
     			exit 0
     		fi            
 			apt-get -y update
