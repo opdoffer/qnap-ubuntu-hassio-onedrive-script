@@ -1,7 +1,7 @@
 #!/bin/bash
 # Fresh install, backup or restore HASSIO on QNAPTS251 running Ubuntu
 # Author: opdoffer
-exec 1 2>&1 | tee ${qnap-ubuntu-hassio-onedrive-script.log}
+exec 1 2>&1 | tee ${~/qnap-ubuntu-hassio-onedrive-script.log}
 
 ## ----------------------------------
 # Define custom variables

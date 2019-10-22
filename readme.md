@@ -5,7 +5,7 @@ But a good understanding of ubuntu, qnap, docker hassio and onedrive is needed. 
 
 My goal and setup is: 
 - QNAP TS251 running Ubuntu 18.04 native
-- Docker for my custom dockercontainers with webservers and traefik als a reverse proxy, secured and seperated
+- Docker for my custom dockercontainers with webservers and traefik als a reverse proxy, secured and separated
 - Docker-container configs synced with onedrive (selective folders) for backup and easy adjustments of config/website design
 - NICS loadbalanced
 - HASSIO installed directly on Ubuntu
