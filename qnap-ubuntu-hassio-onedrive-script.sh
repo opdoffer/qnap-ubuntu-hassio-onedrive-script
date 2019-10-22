@@ -16,7 +16,7 @@ gateway4="192.168.5.1" #Enter the ip adress of your gateway to config you bondin
 # ----------------------------------
 RED='\033[0;31m \e[1m'
 NC='\033[0m' # No Color
-DATE=`date +%d-%m-%y %H-%M`
+DATE=`date +%d-%m-%y-%H-%M`
 
 
 
