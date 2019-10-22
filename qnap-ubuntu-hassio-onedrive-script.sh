@@ -1,6 +1,7 @@
 #!/bin/bash
 # Fresh install, backup or restore HASSIO on QNAPTS251 running Ubuntu
 # Author: opdoffer
+exec 1 2>&1 | tee ${qnap-ubuntu-hassio-onedrive-script.log}
 
 ## ----------------------------------
 # Define custom variables
@@ -221,34 +222,14 @@ bond_nics(){
         mii-monitor-interval: 100" >/etc/netplan/01-network-manager-all.yaml
 			netplan --debug apply
 			echo "The following commands sets NIC in promiscuous mode enabled."
-			ifconfig ens33 up
-			ifconfig ens33 promisc
+			ifconfig bonbd0 up
+			ifconfig bond0 promisc
 			else
 			    echo "You answered no."
 			fi
 			read -p "Press [ENTER] to continue or CTRL-C to abort..."
 }
 
-# -------------------------------------------------------------------------------------
-# Install mods vfor zwave and zigbee on QNAP TS251
-# -------------------------------------------------------------------------------------			
-
-install_mods_zwave_zigbee(){
-			printf "\033c"
-			echo -e "${RED}Do you want to install mods for Aeotec Zwave USBstick and Conbee 2 USBstick? (y/n) only tested on QNAPTS251. ${NC}\n"
-			read answer3
-			if [ "$answer3" != "${answer3#[Yy]}" ] ;then
-				insmod /usr/local/modules/cp210x.ko
-				insmod /usr/local/modules/usbserial.ko
-				insmod /usr/local/modules/cdc-acm.ko
-				insmod /usr/local/modules/ftdi_sio.ko
-				lsusb
-				ls /dev/tty*
-				else
-			    	echo "You answered no."
-				fi
-				read -p "Press [ENTER] to continue or CTRL-C to abort..."
-}
 
 # -------------------------------------------------------------------------------------
 # Upgrade conbee 2 usbstick
@@ -291,10 +272,9 @@ show_menus() {
 	echo " 2. Install of docker, HASIO and recovery of HASSIO config"
 	echo " 3. Install of docker, HASIO and recovery of HASSIO config from onedrive"
 	echo " 4. Loadbalance nics (bond0 interface will be created, testen on QNAP TS251)"
-	echo " 5. Install mods for Zwave and Zigbee to support Aeotec an Conbee2 USB sticks"
-	echo " 6. Upgrade Conbee 2 USB  stick"
-	echo " 7. Update containers (working on)"
-	echo " 8. Quit"
+	echo " 5. Upgrade Conbee 2 USB  stick"
+	echo " 6. Update containers (working on)"
+	echo " 7. Quit"
 }
 # read input from the keyboard and take a action
 read_options(){
@@ -305,10 +285,9 @@ read_options(){
 		2) inst_docker_hassio_localbackupconfig ;;
 		3) inst_docker_hassio_onedrive_containers ;;
 		4) bond_nics ;;
-		5) install_mods_zwave_zigbee ;;
-		6) upgrade_conbee2 ;;
-		7) update_containers ;;
-		8) exit 0;;
+		5) upgrade_conbee2 ;;
+		6) update_containers ;;
+		7) exit 0;;
 		*) echo -e "${RED}Error...${NC}" && sleep 2
 	esac
 }
