@@ -85,7 +85,7 @@ inst_docker_hassio_onedrive_containers(){
 				then 
    					echo "HASSIO not installed continuing...\n"
 				else
-   					echo "${RED}You need to stop here. HASSIO is already installed. Press CTRL-C!\n"
+   					echo -e "${RED}You need to stop here. HASSIO is already installed. Press CTRL-C!\n"
    					exit
 			fi
 			apt-get -y update
