@@ -27,14 +27,8 @@ inst_docker_hassio(){
 			printf "\033c"
 			echo -e "${RED}Really want to start install of docker and HASSIO?${NC}\n"
 			read -p "Press [ENTER] to continue or CTRL-C to abort..."
-            apt-get -y update
-            apt -y install docker
-            apt -y install docker-compose
-            sudo -i
-			add-apt-repository universe
-			apt-get update
-			apt-get install -y apparmor-utils apt-transport-https avahi-daemon ca-certificates curl dbus jq network-manager socat software-properties-common
-			curl -sL "https://raw.githubusercontent.com/home-assistant/hassio-installer/master/hassio_install.sh" | bash -s
+            install_docker
+            install_hassio
 }
 
 # -------------------------------------------------------------------------------------
@@ -44,16 +38,8 @@ inst_docker_hassio_localbackupconfig(){
 			printf "\033c"
 			echo -e "${RED}Really want to start install of docker and HASSIO and recover HASSIO from local config folder?${NC}\n"
 			read -p "Press [ENTER] to continue or CTRL-C to abort..."
-            apt-get -y update
-            apt -y install docker
-            apt -y install docker-compose
-            echo "Trying to install HASSIO..."
-            echo"${RED}Type EXIT en ENTER. I need to exit current user and enter root...sorry for that${NC}"
-            sudo -i
-			add-apt-repository universe
-			apt-get -y update
-			apt-get install -y apparmor-utils apt-transport-https avahi-daemon ca-certificates curl dbus jq network-manager socat software-properties-common
-			curl -sL "https://raw.githubusercontent.com/home-assistant/hassio-installer/master/hassio_install.sh" | bash -s
+            install_docker
+            install_hassio
        		echo" "
        		echo" "
        		echo -e "${RED}Is the backup of HASSIO located in $hassiobackupfolder? (y/n)  ${NC}\n"
@@ -80,29 +66,21 @@ inst_docker_hassio_onedrive_containers(){
 			printf "\033c"
 			echo -e "${RED}Really want to start install of docker and HASSIO and recover HASSIO from OneDrive folder?${NC}\n"
 			read -p "Press [ENTER] to continue or CTRL-C to abort..."
-            echo "Trying to install HASSIO, but first let's check if it is already installed..."
-            
-            if [[ `systemctl|grep hassio|wc -l` -lt 1 ]]; then
-				echo -e "${RED}Looks like HASSIO is not installed. Continuing...${NC}\n"
-    		else
-    			echo -e "${RED}HASSIO seems to be installed already. Exiting script.?${NC}\n"
-    			exit 0
-    		fi            
-			apt-get -y update
-            apt -y install docker
-            apt -y install docker-compose
-            apt-get -y install pkg-config
-            apt-get -y install pkgconf
-            
-            echo -e "${RED}Type EXIT en ENTER. I need to exit current user and enter root...sorry for that${NC}"
-            sudo -i
-			add-apt-repository universe
-			apt-get -y update
-			apt-get install -y apparmor-utils apt-transport-https avahi-daemon ca-certificates curl dbus jq network-manager socat software-properties-common
-			curl -sL "https://raw.githubusercontent.com/home-assistant/hassio-installer/master/hassio_install.sh" | bash -s
-       		echo" "
-       		echo" "
-       		apt -y install libcurl4-openssl-dev git
+			install_docker
+			install_hassio
+       		install_OneDrive
+       		recover_HASSIO_from_Drive
+       		echo "Please reboot, it is necessary(!)"
+}	
+
+# -------------------------------------------------------------------------------------
+# INSTALLATION of OneDrive
+# -------------------------------------------------------------------------------------	
+install_OneDrive(){
+			printf "\033c"
+			echo -e "${RED}Really want to start install of OneDrive. Please skip this if you already install Onedrive on this system.${NC}\n"
+			read -p "Press [ENTER] to continue or CTRL-C to abort..."
+			apt -y install libcurl4-openssl-dev git
 			apt -y install libsqlite3-dev
 			echo -e "${RED}Are you running Ubuntu 18.04 or higher? (y/n)  ${NC}\n"
 			read answer1
@@ -144,7 +122,13 @@ inst_docker_hassio_onedrive_containers(){
 			systemctl --user enable onedrive
 			systemctl --user start onedrive
 			(crontab -u remco -l; echo "@reboot /bin/sh onedrive --monitor" ) | crontab -u $USER -
-			echo -e "${RED}ADo yu want to restore HASS config v=from you OneDrive folder (y/n)  ${NC}\n"
+}
+
+# -------------------------------------------------------------------------------------
+# Restore HASSIO config from OneDrive
+# -------------------------------------------------------------------------------------	
+recover_HASSIO_from_Drive(){
+			echo -e "${RED}Do you want to restore HASS config v=from you OneDrive folder (y/n)  ${NC}\n"
 			read answer5
 			if [ "$answer5" != "${answer5#[Yy]}" ] ;then
     			echo "You answered yes, assuming  the config of HASSIO is backed-up in $hassiobackupfolder"
@@ -152,15 +136,52 @@ inst_docker_hassio_onedrive_containers(){
 			else
    			 echo "You answered No, please restore folder yourself or start with a clean config."
 			fi
-			
 			mkdir ~/OneDrive/$onedrivefolderbackup
 			mkdir ~/OneDrive/$onedrivefolderbackup/hassiobackupfolder
 			mkdir ~/OneDrive/$onedrivefolderbackup/hassiobackupfolder/$DATE
-			echo "Creating an axtra backup, just for sure."
+			echo "Creating an extra backup, just for sure."
 			cp -vr /usr/share/hassio/homeassistant/* ~/OneDrive/$onedrivefolderbackup/hassiobackupfolder/$DATE
-			echo "Please reboot, it is necessary(!)"
-}	
-			
+}
+
+# -------------------------------------------------------------------------------------
+# Docker install procedure
+# -------------------------------------------------------------------------------------			
+install_docker(){
+            if [[ `systemctl|grep docker|wc -l` -lt 1 ]]; then
+				echo -e "${RED}Looks like docker is not installed. Continuing...${NC}\n"
+			apt-get -y update
+            apt -y install docker
+            apt -y install docker-compose
+            else
+    			echo -e "${RED}Docker seems to be installed already. Skipping docker installation.${NC}\n"
+    		fi
+}
+
+
+
+# -------------------------------------------------------------------------------------
+# HASSIO install procedure
+# -------------------------------------------------------------------------------------			
+install_hassio(){
+            echo "Trying to install HASSIO, but first let's check if it is already installed..."
+            if [[ `systemctl|grep hassio|wc -l` -lt 1 ]]; then
+				echo -e "${RED}Looks like HASSIO is not installed. Continuing...${NC}\n"
+			apt-get -y update
+            apt-get -y install pkg-config
+            apt-get -y install pkgconf      
+            echo -e "${RED}Type EXIT en ENTER. I need to exit current user and enter root...sorry for that${NC}"
+            sudo -i
+			add-apt-repository universe
+			apt-get -y update
+			apt-get install -y apparmor-utils apt-transport-https avahi-daemon ca-certificates curl dbus jq network-manager socat software-properties-common
+			curl -sL "https://raw.githubusercontent.com/home-assistant/hassio-installer/master/hassio_install.sh" | bash -s
+       		echo" "
+       		echo" "
+    		else
+    			echo -e "${RED}HASSIO seems to be installed already. Skipping HASSIO installation.${NC}\n"
+    		fi
+}
+		
 # -------------------------------------------------------------------------------------
 # Bond nics tested on QNAP TS251
 # -------------------------------------------------------------------------------------			
@@ -243,7 +264,7 @@ upgrade_conbee2(){
 # ----------------------------------------------
 # Update containers
 # ----------------------------------------------
-
+# under construction
 
 
 
