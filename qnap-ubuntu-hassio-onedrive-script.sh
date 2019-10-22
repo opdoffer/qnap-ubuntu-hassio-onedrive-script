@@ -89,6 +89,7 @@ inst_docker_hassio_onedrive_containers(){
             if [[ -z $(ps -ef |grep ${hassio-supervisor.service}) ]]
 				then 
    					echo "${RED}You need to stop here. HASSIO is already installed. Press CTRL-C!\n"
+   					exit
 				else
    					echo "HASSIO not installed continuing...\n"
 			fi
@@ -142,12 +143,20 @@ inst_docker_hassio_onedrive_containers(){
 			systemctl --user enable onedrive
 			systemctl --user start onedrive
 			(crontab -u remco -l; echo "@reboot /bin/sh onedrive --monitor" ) | crontab -u $USER -
+			echo -e "${RED}ADo yu want to restore HASS config v=from you OneDrive folder (y/n)  ${NC}\n"
+			read answer5
+			if [ "$answer5" != "${answer5#[Yy]}" ] ;then
+    			echo "You answered yes, assuming  the config of HASSIO is backed-up in $hassiobackupfolder"
+    			cp -rv $onedrivefoldercurrent/* /usr/share/hassio/homeassistant
+			else
+   			 echo "You answered No, please restore folder yourself or start with a clean config."
+			fi
+			
 			mkdir ~/OneDrive/$onedrivefolderbackup
 			mkdir ~/OneDrive/$onedrivefolderbackup/hassiobackupfolder
 			mkdir ~/OneDrive/$onedrivefolderbackup/hassiobackupfolder/$DATE
 			echo "Creating an axtra backup, just for sure."
 			cp -vr /usr/share/hassio/homeassistant/* ~/OneDrive/$onedrivefolderbackup/hassiobackupfolder/$DATE
-			
 			echo "Please reboot, it is necessary(!)"
 }	
 			
@@ -218,8 +227,8 @@ install_mods_zwave_zigbee(){
 upgrade_conbee2(){
 			printf "\033c"
 			echo -e "${RED}Do you want to upgrade Conbee 2 USBstick? (y/n) only tested on QNAPTS251. ${NC}\n"
-			read answer3
-			if [ "$answer3" != "${answer3#[Yy]}" ] ;then
+			read answer4
+			if [ "$answer4" != "${answer4#[Yy]}" ] ;then
 		    	systemctl stop deconz
 		    	wget https://www.dresden-elektronik.de/rpi/deconz-firmware/deCONZ_ConBeeII_0x26490700.bin.GCF
 		    	GCFFlasher_internal -d /dev/ttyACM0 -f deCONZ_ConBeeII_0x26490700.bin.GCF
