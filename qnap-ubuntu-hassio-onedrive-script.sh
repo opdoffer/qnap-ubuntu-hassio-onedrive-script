@@ -5,8 +5,8 @@
 ## ----------------------------------
 # Define custom variables
 # ----------------------------------
-onedrivefoldercurrent="container-configs-current" #Enter your most current docker container config folder, which you copied to Onedrive and want to recover from
-onedrivefolderbackup="container-configs-backup" #Enter the path in Onedrive where backups of your contianer-configs will be synced
+onedrivefoldercurrent="container-configs-current" #Enter your most current docker container config folder, which you copied to OneDrive and want to recover from
+onedrivefolderbackup="container-configs-backup" #Enter the path in OneDrive where backups of your contianer-configs will be synced
 hassiobackupfolder="~/hassiobackupfolder"
 ip_addresses="[192.168.5.3/24]" #Enter the ip adress and subnet to config you bonding nics in Ubuntu on the QNAP. Entering wrong will end up in an inaccessible server.
 gateway4="192.168.5.1" #Enter the ip adress of your gateway to config you bonding nics in Ubuntu on the QNAP. 
@@ -74,11 +74,11 @@ inst_docker_hassio_localbackupconfig(){
 }
 			
 # -------------------------------------------------------------------------------------
-# INSTALLATION of Docker and HASSIO and recovery of config from Onedrive backupfolder
+# INSTALLATION of Docker and HASSIO and recovery of config from OneDrive backupfolder
 # -------------------------------------------------------------------------------------			
 inst_docker_hassio_onedrive_containers(){
 			printf "\033c"
-			echo -e "${RED}Really want to start install of docker and HASSIO and recover HASSIO from Onedrive folder?${NC}\n"
+			echo -e "${RED}Really want to start install of docker and HASSIO and recover HASSIO from OneDrive folder?${NC}\n"
 			read -p "Press [ENTER] to continue or CTRL-C to abort..."
             apt-get -y update
             apt -y install docker
@@ -125,7 +125,7 @@ inst_docker_hassio_onedrive_containers(){
 			echo ""
 			echo ""
 			echo ""
-			echo "Next wil start Onedrive and it will prompt you to visit the URL to get authorization. Log in to your Onedrive account, and grant the app permission to access your account. Once this is done, you will be presented with a blank white page. Copy the URL and paste it into the Terminal at the prompt."
+			echo "Next wil start OneDrive and it will prompt you to visit the URL to get authorization. Log in to your OneDrive account, and grant the app permission to access your account. Once this is done, you will be presented with a blank white page. Copy the URL and paste it into the Terminal at the prompt."
 			read -p "Press [Enter] key to continue..."
 			onedrive
 			echo ""
@@ -142,11 +142,11 @@ inst_docker_hassio_onedrive_containers(){
 			systemctl --user enable onedrive
 			systemctl --user start onedrive
 			(crontab -u remco -l; echo "@reboot /bin/sh onedrive --monitor" ) | crontab -u $USER -
-			mkdir ~/Onedrive/$onedrivefolderbackup
-			mkdir ~/Onedrive/$onedrivefolderbackup/hassiobackupfolder
-			mkdir ~/Onedrive/$onedrivefolderbackup/hassiobackupfolder/$DATE
+			mkdir ~/OneDrive/$onedrivefolderbackup
+			mkdir ~/OneDrive/$onedrivefolderbackup/hassiobackupfolder
+			mkdir ~/OneDrive/$onedrivefolderbackup/hassiobackupfolder/$DATE
 			echo "Creating an axtra backup, just for sure."
-			cp -vr /usr/share/hassio/homeassistant/* ~/Onedrive/$onedrivefolderbackup/hassiobackupfolder/$DATE
+			cp -vr /usr/share/hassio/homeassistant/* ~/OneDrive/$onedrivefolderbackup/hassiobackupfolder/$DATE
 			
 			echo "Please reboot, it is necessary(!)"
 }	
