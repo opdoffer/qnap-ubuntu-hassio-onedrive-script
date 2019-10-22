@@ -125,7 +125,7 @@ inst_docker_hassio_onedrive_containers(){
 			echo ""
 			echo ""
 			echo ""
-			echo "Next wil start Onedrive and it will prompt you to visit the URL to get authorization. Log in to your OneDrive account, and grant the app permission to access your account. Once this is done, you will be presented with a blank white page. Copy the URL and paste it into the Terminal at the prompt."
+			echo "Next wil start Onedrive and it will prompt you to visit the URL to get authorization. Log in to your Onedrive account, and grant the app permission to access your account. Once this is done, you will be presented with a blank white page. Copy the URL and paste it into the Terminal at the prompt."
 			read -p "Press [Enter] key to continue..."
 			onedrive
 			echo ""
