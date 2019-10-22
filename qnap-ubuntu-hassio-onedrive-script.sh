@@ -81,13 +81,14 @@ inst_docker_hassio_onedrive_containers(){
 			echo -e "${RED}Really want to start install of docker and HASSIO and recover HASSIO from OneDrive folder?${NC}\n"
 			read -p "Press [ENTER] to continue or CTRL-C to abort..."
             echo "Trying to install HASSIO, but first let's check if it is already installed..."
-            if [[ -z $(ps -ef |grep ${hassio-supervisor.service}) ]]
-				then 
-   					echo "HASSIO not installed continuing...\n"
-				else
-   					echo -e "${RED}You need to stop here. HASSIO is already installed. Press CTRL-C!\n"
-   					exit
-			fi
+            
+            if [[ `ps -acx|grep hassio-supervisor.service|wc -l` -lt 1 ]]; then
+				echo -e "${RED}HASSIO seems to be not installed. Continuing...${NC}\n"
+    		else
+    			echo -e "${RED}HASSIO seems to be installed already. Exiting script.?${NC}\n"
+    			ps -acx|grep hassio-supervisor.service|wc -l
+    			exit 0
+    		fi            
 			apt-get -y update
             apt -y install docker
             apt -y install docker-compose
